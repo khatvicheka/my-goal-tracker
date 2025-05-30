@@ -106,7 +106,6 @@ function saveGoal(e) {
   renderGoals();
 }
 
-
 function deleteGoal(goalId) {
   showConfirmModal(
     "Delete Goal",
@@ -756,12 +755,39 @@ function filterAndRenderTasks() {
 }
 
 // Update existing functions to reset pagination
-function toggleTaskComplete(taskId) {
-  const goal = goals.find((g) => g.id === currentGoalId);
-  const task = goal.tasks.find((t) => t.id === taskId);
-  task.completed = !task.completed;
-  localStorage.setItem("goals", JSON.stringify(goals));
-  renderTasks(); // This will maintain current page and filters
+function deleteGoal(goalId) {
+  showConfirmModal(
+    "Delete Goal",
+    "Are you sure you want to delete this goal and all its tasks? This action cannot be undone.",
+    () => {
+      try {
+        goals = goals.filter((g) => g.id !== goalId);
+        localStorage.setItem("goals", JSON.stringify(goals));
+
+        // Adjust current page if we deleted the last item on the page
+        const filteredGoals = getFilteredGoals();
+        const totalPages = Math.ceil(filteredGoals.length / goalsPerPage);
+        if (currentGoalPage > totalPages && totalPages > 0) {
+          currentGoalPage = totalPages;
+        }
+
+        renderGoals();
+
+        // Show success toast
+        showToast(
+          "success",
+          "Goal Deleted",
+          "Goal and all its tasks have been deleted successfully."
+        );
+      } catch (error) {
+        showToast(
+          "error",
+          "Delete Failed",
+          "Failed to delete goal. Please try again."
+        );
+      }
+    }
+  );
 }
 
 function deleteTask(taskId) {
