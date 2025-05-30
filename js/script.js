@@ -790,21 +790,41 @@ function deleteGoal(goalId) {
   );
 }
 
+// Updated deleteTask function using modern confirmation modal
 function deleteTask(taskId) {
-  if (confirm("Are you sure you want to delete this task?")) {
-    const goal = goals.find((g) => g.id === currentGoalId);
-    goal.tasks = goal.tasks.filter((t) => t.id !== taskId);
-    localStorage.setItem("myGoalApp", JSON.stringify(goals));
+  showConfirmModal(
+    "Delete Task",
+    "Are you sure you want to delete this task? This action cannot be undone.",
+    () => {
+      try {
+        const goal = goals.find((g) => g.id === currentGoalId);
+        if (goal) {
+          goal.tasks = goal.tasks.filter((t) => t.id !== taskId);
+          localStorage.setItem("myGoalApp", JSON.stringify(goals));
+          renderTasks();
 
-    // Adjust current page if we deleted the last item on the page
-    const filteredTasks = getFilteredTasks();
-    const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
-    if (currentTaskPage > totalPages && totalPages > 0) {
-      currentTaskPage = totalPages;
+          // Show success toast
+          showToast(
+            "success",
+            "Task Deleted",
+            "The task has been successfully deleted."
+          );
+        } else {
+          showToast(
+            "error",
+            "Error",
+            "Could not find the goal to delete the task from."
+          );
+        }
+      } catch (error) {
+        showToast(
+          "error",
+          "Error",
+          "Failed to delete the task. Please try again."
+        );
+      }
     }
-
-    renderTasks();
-  }
+  );
 }
 
 function filterAndRenderGoals() {
