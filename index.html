@@ -62,6 +62,21 @@
       <div class="goals-grid" id="goalsContainer">
         <!-- Goals will be rendered here -->
       </div>
+
+      <!-- Add this after <div class="goals-grid" id="goalsContainer"> and before </div> (container closing) -->
+    <div class="pagination-container" id="goalPagination">
+        <button class="btn btn-secondary" id="prevGoalsBtn" onclick="prevGoalsPage()">
+            <i class="fas fa-chevron-left"></i> Prev
+        </button>
+        
+        <div class="pagination-info">
+            <span id="goalPaginationInfo">Showing 1-6 of 10 goals</span>
+        </div>
+        
+        <button class="btn btn-secondary" id="nextGoalsBtn" onclick="nextGoalsPage()">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
     </div>
 
     <!-- Goal Modal -->
@@ -140,7 +155,7 @@
     </div>
 
     <!-- Task Modal -->
-    <div class="modal" id="taskModal">
+    <!-- <div class="modal" id="taskModal">
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title" id="taskModalTitle">Goal Tasks</h2>
@@ -148,14 +163,68 @@
         </div>
 
         <div id="tasksList">
-          <!-- Tasks will be rendered here -->
+
         </div>
 
         <button class="btn btn-primary" onclick="openTaskFormModal()">
           <i class="fas fa-plus"></i> Add New Task
         </button>
       </div>
+    </div> -->
+
+    <!-- Task Modal -->
+<div class="modal" id="taskModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title" id="taskModalTitle">Goal Tasks</h2>
+      <button class="close-btn" onclick="closeTaskModal()">&times;</button>
     </div>
+
+    <!-- Task Controls -->
+    <div class="task-controls">
+      <div class="search-box">
+        <input
+          type="text"
+          id="taskSearchInput"
+          placeholder="Search tasks..."
+        />
+        <i class="fas fa-search"></i>
+      </div>
+      <select class="filter-select" id="taskStatusFilter">
+        <option value="">All Tasks</option>
+        <option value="completed">Completed</option>
+        <option value="pending">Pending</option>
+      </select>
+
+      <button class="btn btn-primary" onclick="openTaskFormModal()">
+    <i class="fas fa-plus"></i> Add New Task
+  </button>
+    </div>
+
+    <div id="tasksList">
+      <!-- Tasks will be rendered here -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" id="taskPagination">
+        <button class="btn btn-secondary" id="prevTasksBtn" onclick="prevTasksPage()">
+            <i class="fas fa-chevron-left"></i> Prev
+        </button>
+        
+        <div class="pagination-info">
+            <span id="taskPaginationInfo">Showing 1-5 of 10 tasks</span>
+        </div>
+        
+        <button class="btn btn-secondary" id="nextTasksBtn" onclick="nextTasksPage()">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- <button class="btn btn-primary" onclick="openTaskFormModal()">
+      <i class="fas fa-plus"></i> Add New Task
+    </button> -->
+  </div>
+</div>
 
     <!-- Task Form Modal -->
     <div class="modal" id="taskFormModal">
