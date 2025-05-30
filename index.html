@@ -24,6 +24,9 @@
       <div class="header">
         <h1><i class="fas fa-bullseye"></i> Goal & Task Manager</h1>
         <div style="display: flex; gap: 10px">
+            <button class="btn btn-secondary" onclick="clearAllData()">
+                <i class="fas fa-trash"></i> Clear Data
+            </button>
           <button class="btn btn-secondary" onclick="exportData()">
             <i class="fas fa-download"></i> Export
           </button>
@@ -284,6 +287,29 @@
         </form>
       </div>
     </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="confirmTitle">Confirm Action</h2>
+                <button class="close-btn" onclick="closeConfirmModal()">&times;</button>
+            </div>
+            <div class="confirm-body">
+                <div class="confirm-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <p id="confirmMessage">Are you sure you want to proceed?</p>
+            </div>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <!-- my js -->
     <script src="./js/script.js"></script>

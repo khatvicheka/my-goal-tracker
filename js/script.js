@@ -788,27 +788,158 @@ function importData() {
         try {
           const importedGoals = JSON.parse(e.target.result);
           if (Array.isArray(importedGoals)) {
-            if (
-              confirm("This will replace all existing goals. Are you sure?")
-            ) {
-              goals = importedGoals;
-              localStorage.setItem("goals", JSON.stringify(goals));
-              renderGoals();
-              alert("Goals imported successfully!");
-            }
+            // Use modern confirmation modal instead of browser confirm
+            showConfirmModal(
+              "Import Goals",
+              "This will replace all existing goals with the imported data. Are you sure you want to continue?",
+              () => {
+                try {
+                  goals = importedGoals;
+                  localStorage.setItem("goals", JSON.stringify(goals));
+                  renderGoals();
+
+                  // Show success toast instead of alert
+                  showToast(
+                    "success",
+                    "Import Successful",
+                    "Goals have been imported successfully!"
+                  );
+                } catch (error) {
+                  showToast(
+                    "error",
+                    "Import Failed",
+                    "Failed to save imported goals. Please try again."
+                  );
+                }
+              }
+            );
           } else {
-            alert(
-              "Invalid file format. Please select a valid goals backup file."
+            // Show error toast instead of alert
+            showToast(
+              "error",
+              "Invalid File Format",
+              "Please select a valid goals backup file."
             );
           }
         } catch (error) {
-          alert("Error reading file. Please select a valid JSON file.");
+          // Show error toast instead of alert
+          showToast(
+            "error",
+            "File Read Error",
+            "Error reading file. Please select a valid JSON file."
+          );
         }
       };
       reader.readAsText(file);
     }
   };
   input.click();
+}
+
+// Modern Confirmation Modal
+function showConfirmModal(title, message, onConfirm) {
+  document.getElementById("confirmTitle").textContent = title;
+  document.getElementById("confirmMessage").textContent = message;
+  document.getElementById("confirmModal").style.display = "block";
+
+  const confirmBtn = document.getElementById("confirmBtn");
+  confirmBtn.onclick = () => {
+    closeConfirmModal();
+    onConfirm();
+  };
+}
+
+function closeConfirmModal() {
+  document.getElementById("confirmModal").style.display = "none";
+}
+
+// Toast Notification System
+function showToast(type, title, message, duration = 4000) {
+  const toastContainer = document.getElementById("toastContainer");
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+
+  const icons = {
+    success: "fas fa-check-circle",
+    error: "fas fa-exclamation-circle",
+    warning: "fas fa-exclamation-triangle",
+    info: "fas fa-info-circle",
+  };
+
+  toast.innerHTML = `
+    <div class="toast-icon">
+      <i class="${icons[type]}"></i>
+    </div>
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close" onclick="closeToast(this)">
+      <i class="fas fa-times"></i>
+    </button>
+  `;
+
+  toastContainer.appendChild(toast);
+
+  // Auto remove after duration
+  setTimeout(() => {
+    if (toast.parentNode) {
+      closeToast(toast.querySelector(".toast-close"));
+    }
+  }, duration);
+}
+
+function closeToast(closeBtn) {
+  const toast = closeBtn.closest(".toast");
+  toast.classList.add("toast-exit");
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.remove();
+    }
+  }, 300);
+}
+
+// Updated Clear Data Function
+function clearAllData() {
+  showConfirmModal(
+    "Clear All Data",
+    "Are you sure you want to permanently delete all goals and tasks? This action cannot be undone.",
+    () => {
+      // Second confirmation for critical action
+      showConfirmModal(
+        "Final Confirmation",
+        "This will permanently delete ALL your data. There is no way to recover it. Are you absolutely sure?",
+        () => {
+          try {
+            // Clear localStorage
+            localStorage.removeItem("goals");
+            localStorage.removeItem("tasks");
+
+            // Reset in-memory data
+            goals = [];
+            tasks = [];
+
+            // Refresh the display
+            renderGoals();
+
+            // Show success toast
+            showToast(
+              "success",
+              "Data Cleared",
+              "All goals and tasks have been permanently deleted."
+            );
+          } catch (error) {
+            showToast(
+              "error",
+              "Error",
+              "Failed to clear data. Please try again."
+            );
+          }
+        }
+      );
+    }
+  );
 }
 
 // Modal click outside to close
