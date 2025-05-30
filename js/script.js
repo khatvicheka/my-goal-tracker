@@ -1,4 +1,4 @@
-let goals = JSON.parse(localStorage.getItem("goals")) || [];
+let goals = JSON.parse(localStorage.getItem("myGoalApp")) || [];
 let currentGoalId = null;
 let editingGoalId = null;
 let editingTaskId = null;
@@ -101,7 +101,7 @@ function saveGoal(e) {
     goals.push(goalData);
   }
 
-  localStorage.setItem("goals", JSON.stringify(goals));
+  localStorage.setItem("myGoalApp", JSON.stringify(goals));
   closeGoalModal();
   renderGoals();
 }
@@ -113,7 +113,7 @@ function deleteGoal(goalId) {
     () => {
       try {
         goals = goals.filter((g) => g.id !== goalId);
-        localStorage.setItem("goals", JSON.stringify(goals));
+        localStorage.setItem("myGoalApp", JSON.stringify(goals));
 
         // Adjust current page if we deleted the last item on the page
         const filteredGoals = getFilteredGoals();
@@ -235,7 +235,7 @@ function saveTask(e) {
     goal.tasks.push(taskData);
   }
 
-  localStorage.setItem("goals", JSON.stringify(goals));
+  localStorage.setItem("myGoalApp", JSON.stringify(goals));
   closeTaskFormModal();
   renderTasks();
 }
@@ -248,7 +248,7 @@ function deleteTask(taskId) {
   if (confirm("Are you sure you want to delete this task?")) {
     const goal = goals.find((g) => g.id === currentGoalId);
     goal.tasks = goal.tasks.filter((t) => t.id !== taskId);
-    localStorage.setItem("goals", JSON.stringify(goals));
+    localStorage.setItem("myGoalApp", JSON.stringify(goals));
     renderTasks();
   }
 }
@@ -257,7 +257,7 @@ function toggleTaskComplete(taskId) {
   const goal = goals.find((g) => g.id === currentGoalId);
   const task = goal.tasks.find((t) => t.id === taskId);
   task.completed = !task.completed;
-  localStorage.setItem("goals", JSON.stringify(goals));
+  localStorage.setItem("myGoalApp", JSON.stringify(goals));
   renderTasks();
 }
 
@@ -762,7 +762,7 @@ function deleteGoal(goalId) {
     () => {
       try {
         goals = goals.filter((g) => g.id !== goalId);
-        localStorage.setItem("goals", JSON.stringify(goals));
+        localStorage.setItem("myGoalApp", JSON.stringify(goals));
 
         // Adjust current page if we deleted the last item on the page
         const filteredGoals = getFilteredGoals();
@@ -794,7 +794,7 @@ function deleteTask(taskId) {
   if (confirm("Are you sure you want to delete this task?")) {
     const goal = goals.find((g) => g.id === currentGoalId);
     goal.tasks = goal.tasks.filter((t) => t.id !== taskId);
-    localStorage.setItem("goals", JSON.stringify(goals));
+    localStorage.setItem("myGoalApp", JSON.stringify(goals));
 
     // Adjust current page if we deleted the last item on the page
     const filteredTasks = getFilteredTasks();
@@ -843,7 +843,7 @@ function importData() {
               () => {
                 try {
                   goals = importedGoals;
-                  localStorage.setItem("goals", JSON.stringify(goals));
+                  localStorage.setItem("myGoalApp", JSON.stringify(goals));
                   renderGoals();
 
                   // Show success toast instead of alert
@@ -961,9 +961,7 @@ function clearAllData() {
         () => {
           try {
             // Clear localStorage
-            localStorage.removeItem("goals");
-            localStorage.removeItem("tasks");
-
+            localStorage.removeItem("myGoalApp");
             // Reset in-memory data
             goals = [];
             tasks = [];
