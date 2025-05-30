@@ -192,7 +192,7 @@ body {
 }
 
 .goal-meta .priority-high {
-  color: #7c3aed;
+  color: #f2320c;
   font-weight: 600;
   background: #f3f4f6;
   padding: 2px 8px;
@@ -201,7 +201,7 @@ body {
 }
 
 .goal-meta .priority-medium {
-  color: #0891b2;
+  color: #b3a706;
   font-weight: 500;
   background: #f3f4f6;
   padding: 2px 8px;
@@ -210,7 +210,7 @@ body {
 }
 
 .goal-meta .priority-low {
-  color: #64748b;
+  color: #084498;
   font-weight: 400;
   background: #f3f4f6;
   padding: 2px 8px;
@@ -490,7 +490,7 @@ body {
 }
 
 .status-completed {
-  background: #0adfb1;
+  background: #069879;
   color: white;
 }
 
