@@ -106,20 +106,40 @@ function saveGoal(e) {
   renderGoals();
 }
 
+
 function deleteGoal(goalId) {
-  if (confirm("Are you sure you want to delete this goal and all its tasks?")) {
-    goals = goals.filter((g) => g.id !== goalId);
-    localStorage.setItem("goals", JSON.stringify(goals));
+  showConfirmModal(
+    "Delete Goal",
+    "Are you sure you want to delete this goal and all its tasks? This action cannot be undone.",
+    () => {
+      try {
+        goals = goals.filter((g) => g.id !== goalId);
+        localStorage.setItem("goals", JSON.stringify(goals));
 
-    // Adjust current page if we deleted the last item on the page
-    const filteredGoals = getFilteredGoals();
-    const totalPages = Math.ceil(filteredGoals.length / goalsPerPage);
-    if (currentGoalPage > totalPages && totalPages > 0) {
-      currentGoalPage = totalPages;
+        // Adjust current page if we deleted the last item on the page
+        const filteredGoals = getFilteredGoals();
+        const totalPages = Math.ceil(filteredGoals.length / goalsPerPage);
+        if (currentGoalPage > totalPages && totalPages > 0) {
+          currentGoalPage = totalPages;
+        }
+
+        renderGoals();
+
+        // Show success toast
+        showToast(
+          "success",
+          "Goal Deleted",
+          "Goal and all its tasks have been deleted successfully."
+        );
+      } catch (error) {
+        showToast(
+          "error",
+          "Delete Failed",
+          "Failed to delete goal. Please try again."
+        );
+      }
     }
-
-    renderGoals();
-  }
+  );
 }
 
 function openTaskModal(goalId) {
@@ -360,7 +380,9 @@ function renderGoals() {
             }')">
               <i class="fas fa-edit"></i> Edit
             </button>
-            <button class="btn btn-danger" onclick="deleteGoal('${goal.id}')">
+            <button class="btn btn-secondary" onclick="deleteGoal('${
+              goal.id
+            }')">
               <i class="fas fa-trash"></i> Delete
             </button>
           </div>
@@ -457,7 +479,7 @@ function renderTasks() {
                                 }')">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn-danger" onclick="deleteTask('${
+                                <button class="btn-secondary" onclick="deleteTask('${
                                   task.id
                                 }')">
                                     <i class="fas fa-trash"></i>
@@ -624,7 +646,7 @@ function renderTasks() {
               <button class="btn-secondary" onclick="editTask('${task.id}')">
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="btn-danger" onclick="deleteTask('${task.id}')">
+              <button class="btn-secondary" onclick="deleteTask('${task.id}')">
                 <i class="fas fa-trash"></i>
               </button>
             </div>

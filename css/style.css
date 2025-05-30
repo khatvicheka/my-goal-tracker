@@ -145,15 +145,10 @@ body {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
-/* .goal-card:hover .goal-title {
-  color: #3b82f6;
-} */
-
 .goal-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
   gap: 15px;
 }
 
@@ -192,7 +187,7 @@ body {
 }
 
 .goal-meta i {
-  font-size: 11px;
+  font-size: 13px;
   opacity: 0.7;
 }
 
@@ -202,7 +197,7 @@ body {
   background: #f3f4f6;
   padding: 2px 8px;
   border-radius: 12px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .goal-meta .priority-medium {
@@ -211,7 +206,7 @@ body {
   background: #f3f4f6;
   padding: 2px 8px;
   border-radius: 12px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .goal-meta .priority-low {
@@ -220,13 +215,13 @@ body {
   background: #f3f4f6;
   padding: 2px 8px;
   border-radius: 12px;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .goal-description {
   color: #475569;
   margin-bottom: 20px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -250,7 +245,7 @@ body {
 }
 
 .progress-text {
-  font-size: 12px;
+  font-size: 13px;
   color: #64748b;
   text-align: right;
   margin-bottom: 20px;
@@ -297,6 +292,7 @@ body {
   background: #f8fafc;
   border-radius: 8px;
   margin-bottom: 15px;
+  font-size: 14px;
 }
 
 .modal {
@@ -489,21 +485,18 @@ body {
 }
 
 .status-active {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: #0f8d30;
   color: white;
-  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 .status-completed {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: #0adfb1;
   color: white;
-  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
 }
 
 .status-paused {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: #df4e0a;
   color: white;
-  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
 }
 
 .checkbox {
